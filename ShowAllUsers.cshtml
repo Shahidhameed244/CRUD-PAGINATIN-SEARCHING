@@ -1,0 +1,150 @@
+﻿@model PagedList.IPagedList<Session4.Models.Users>
+
+@{
+    ViewBag.Title = "ShowAllUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc;
+@using PagedList;
+<h2>USERS RECORDS</h2>
+<head>
+    <style>
+        .input-form {
+            display: inline;
+            width: 100%;
+        }
+
+
+
+ul.pagination {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+ul.pagination li {
+    margin: 0 5px;
+}
+
+ul.pagination li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+ul.pagination li a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+ul.pagination li.active a {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+        
+        form {
+            display: flex;
+        }
+
+        .input-form {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+            .input-form:focus {
+                border-color: #007bff;
+            }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            border: 1px solid #007bff;
+            border-left: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 0 4px 4px 0;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+            button[type="submit"]:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+            }
+    </style>
+</head>
+
+<div>
+    <form method="get" action="searching">
+        <input type="text" name="search" placeholder="search here..." class="input-form" />
+        <button type="submit">Search</button>
+
+    </form>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            NAME
+        </th>
+        <th>
+            EMAIL
+        </th>
+        <th>
+            PASSWORD
+        </th>
+        <th>
+            ROLE
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.role)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditUser", new {  id=item.id  }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "DeleteUser", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
+<a href="~/CRUD/AddNewUser">Add New User</a>
+<div class="row mt-5">
+    <div class="col text-center">
+        <div class="block-27">
+            <ul>
+
+                <li>
+                    @Html.PagedListPager(Model, i => Url.Action("ShowAllUsers", "CRUD", new { i, search = Request.QueryString["search"] }))
+                    </>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

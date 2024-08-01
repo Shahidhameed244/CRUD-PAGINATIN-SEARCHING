@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Session4.Models.Users>
+
+@{
+    ViewBag.Title = "searching";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SEARCH USER</h2>
+<head>
+    <style>
+        .input-form {
+            display: inline;
+            width: 100%;
+        }
+
+        table tr th {
+            text-align: left;
+        }
+
+
+        form {
+            display: flex;
+        }
+
+        .input-form {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+            .input-form:focus {
+                border-color: #007bff;
+            }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            border: 1px solid #007bff;
+            border-left: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 0 4px 4px 0;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+            button[type="submit"]:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+            }
+            
+    </style>
+</head>
+<div>
+    <form method="get" action="searching">
+        <input type="text" name="search" placeholder="search here..." class="input-form" />
+        <button type="submit">Search</button>
+
+    </form>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            NAME
+        </th>
+        <th>
+            EMAIL
+        </th>
+        <th>
+            PASSWORD
+        </th>
+        <th>
+            ROLE
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.role)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "DeleteUser", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
